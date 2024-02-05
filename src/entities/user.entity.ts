@@ -1,10 +1,11 @@
 import {
 	Column,
 	CreateDateColumn,
-	Entity,
+	Entity, OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from "typeorm";
+import { Portfolio } from "./portfolio.entity";
 
 @Entity()
 export class User {
@@ -16,6 +17,9 @@ export class User {
 
 	@Column()
 	password: string;
+
+	@OneToMany(() => Portfolio, (portfolio) => portfolio.user)
+	portfolios: Portfolio[];
 
 	@CreateDateColumn()
 	createdAt: Date;
