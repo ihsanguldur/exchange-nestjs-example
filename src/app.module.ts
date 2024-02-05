@@ -5,10 +5,12 @@ import { UsersModule } from "./users/users.module";
 import { SharesModule } from "./shares/shares.module";
 import { PortfoliosModule } from "./portfolios/portfolios.module";
 import { TransactionsModule } from "./transactions/transactions.module";
-import { APP_PIPE } from "@nestjs/core";
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
+import { CustomExceptionFilter } from "./shared/filters/custom-exception.filter";
+import { SuccessResponseInterceptor } from "./shared/interceptors/success-response.interceptor";
 
 @Module({
 	imports: [
@@ -51,6 +53,14 @@ import { DataSource } from "typeorm";
 			useValue: new ValidationPipe({
 				whitelist: true
 			})
+		},
+		{
+			provide: APP_FILTER,
+			useValue: new CustomExceptionFilter()
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useValue: new SuccessResponseInterceptor()
 		}
 	]
 })
