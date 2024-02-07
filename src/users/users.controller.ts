@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { AuthService } from "./auth.service";
 import { Serialize } from "../shared/interceptors/serialize.interceptor";
 import { SerializeUserDto } from "./dtos/serialize-user.dto";
 import { UserDto } from "./dtos/user.dto";
+import { AuthGuard } from "../shared/guards/auth.guard";
 
 @Serialize(SerializeUserDto)
 @Controller('users')
@@ -25,9 +26,10 @@ export class UsersController {
 		return user;
 	}
 
-	@Get("/:id")
-	async getUserById(@Param("id") id: string) {
-		const user = await this.usersService.getOneById(parseInt(id));
+	@UseGuards(AuthGuard)
+	@Get()
+	async getUser(@Request() req: any) {
+		const user = await this.usersService.getOneById(req.user.sub);
 		return user;
 	}
 }
