@@ -6,4 +6,7 @@ export class SerializeUserDto {
 
 	@Expose()
 	email: string;
+
+	@Expose()
+	token: string;
 }

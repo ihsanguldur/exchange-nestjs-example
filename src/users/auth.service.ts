@@ -3,13 +3,15 @@ import { UsersService } from "./users.service";
 import { User } from "../entities/user.entity";
 import { randomBytes, scrypt as _scrypt } from "crypto";
 import { promisify } from "util";
+import { JwtService } from "@nestjs/jwt";
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
 	constructor(
-		private usersService: UsersService
+		private usersService: UsersService,
+		private jwtService: JwtService,
 	) {}
 
 
@@ -33,7 +35,7 @@ export class AuthService {
 		return user;
 	}
 
-	async signIn(email: string, password: string): Promise<User> {
+	async signIn(email: string, password: string) {
 		const user = await this.usersService.getOne(email);
 		if(!user) {
 			throw new NotFoundException("user not found");
@@ -46,6 +48,12 @@ export class AuthService {
 			throw new BadRequestException("password not correct");
 		}
 
-		return user;
+		const payload = {
+			sub: user.id,
+			email: user.email
+		}
+		const token = await this.jwtService.signAsync(payload);
+
+		return { token };
 	}
 }
