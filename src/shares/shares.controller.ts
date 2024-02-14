@@ -13,7 +13,7 @@ export class SharesController {
 	// just for creating share there is no need for authentication
 	@Post()
 	async create(@Body() body: ShareDto) {
-		const share = await this.sharesService.create(body.symbol, body.name, body.currentPrice);
+		const share = await this.sharesService.create(body.symbol, body.name, body.currentPrice, body.quantity);
 		return share;
 	}
 

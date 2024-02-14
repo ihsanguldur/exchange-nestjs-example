@@ -8,6 +8,7 @@ import { JwtService } from "@nestjs/jwt";
 @Module({
   imports: [TypeOrmModule.forFeature([Share])],
   controllers: [SharesController],
-  providers: [SharesService, JwtService]
+  providers: [SharesService, JwtService],
+  exports: [SharesService]
 })
 export class SharesModule {}

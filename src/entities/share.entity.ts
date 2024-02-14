@@ -15,6 +15,9 @@ export class Share {
 	@Column({ type: "decimal", scale: 2})
 	currentPrice: number;
 
+	@Column({default: 0})
+	quantity: number;
+
 	@OneToMany(() => Transaction, (transaction) => transaction.share)
 	transactions: Transaction[];
 

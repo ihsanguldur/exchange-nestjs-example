@@ -8,6 +8,7 @@ import { JwtService } from "@nestjs/jwt";
 @Module({
   imports: [TypeOrmModule.forFeature([Portfolio])],
   controllers: [PortfoliosController],
-  providers: [PortfoliosService, JwtService]
+  providers: [PortfoliosService, JwtService],
+  exports: [PortfoliosService]
 })
 export class PortfoliosModule {}

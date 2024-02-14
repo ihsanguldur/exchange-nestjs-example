@@ -1,4 +1,5 @@
-import { IsCurrency, IsOptional, IsString, IsUppercase, MaxLength } from "class-validator";
+import { IsCurrency, IsNumber, IsOptional, IsString, IsUppercase, MaxLength } from "class-validator";
+import * as buffer from "buffer";
 
 export class UpdateShareDto {
 	@IsString()
@@ -20,4 +21,7 @@ export class UpdateShareDto {
 	})
 	@IsOptional()
 	currentPrice: number;
+
+	@IsNumber()
+	quantity: number;
 }

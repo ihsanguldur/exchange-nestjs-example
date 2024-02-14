@@ -24,7 +24,7 @@ export class SharesService {
 		return shares;
 	}
 
-	async create(symbol: string, name: string, currentPrice: number): Promise<Share> {
+	async create(symbol: string, name: string, currentPrice: number, quantity: number): Promise<Share> {
 		const isExists = await this.repository.findOneBy({ symbol });
 		if(isExists) {
 			throw new BadRequestException("symbol already exists");
@@ -33,7 +33,8 @@ export class SharesService {
 		const share = this.repository.create({
 			symbol,
 			name,
-			currentPrice
+			currentPrice,
+			quantity
 		});
 
 		await this.repository.save(share);
