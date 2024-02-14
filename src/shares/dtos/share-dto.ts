@@ -1,4 +1,4 @@
-import { IsCurrency, IsString, IsUppercase, MaxLength } from "class-validator";
+import { IsCurrency, IsNumber, IsString, IsUppercase, MaxLength, Min } from "class-validator";
 
 export class ShareDto {
 	@IsString()
@@ -17,4 +17,8 @@ export class ShareDto {
 		digits_after_decimal: [2],
 	})
 	currentPrice: number;
+
+	@IsNumber()
+	@Min(1)
+	quantity: number;
 }
